@@ -1,0 +1,28 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@bazel_gazelle//:def.bzl", "gazelle")
+load(":macro.bzl", "a_txt")
+
+# gazelle:prefix github.com/afq984/gazelle1428
+gazelle(
+    name = "gazelle",
+    build_tags = ["tagged"],
+)
+
+go_library(
+    name = "gazelle1428",
+    srcs = [
+        "bar.go",
+        "foo.go",
+    ],
+    embedsrcs = ["b.txt"],
+    importpath = "github.com/afq984/gazelle1428",
+    visibility = ["//visibility:public"],
+)
+
+a_txt()
+
+genrule(
+    name = "b",
+    outs = ["b.txt"],
+    cmd = "cat > $(@)",
+)
